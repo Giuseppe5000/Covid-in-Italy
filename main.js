@@ -2,7 +2,10 @@ const todayDeath = document.getElementById('death');
 const casi = document.getElementById('casi');
 const totaleDeath = document.getElementById('totale-death');
 const totaleCasi = document.getElementById('totale-casi');
+const date = document.getElementById('date');
 
+let d = new Date();
+date.innerText = `${d.getDate()} / ${d.getMonth() + 1}  / ${d.getFullYear()}`
 
 const getCovid = (callback) => {
     const request = new XMLHttpRequest();
@@ -19,7 +22,6 @@ const getCovid = (callback) => {
     request.open('GET', `https://corona-api.com/countries/IT`)
     request.send();
 };
-
 
 
 getCovid((err, data) => {
@@ -53,13 +55,30 @@ getCovid((err, data) => {
                 tension: 0.1
             }]
         };
-        var ctx = document.getElementById('myChart').getContext('2d');
+        let ctx = document.getElementById('myChart').getContext('2d');
 
-        var myChart = new Chart(ctx, {
+        const totalDuration = 10000;
+        const delayBetweenPoints = totalDuration / dataCovid.length;
+        const animation = {
+            x: {
+                type: 'number',
+                easing: 'linear',
+                duration: delayBetweenPoints,
+                from: NaN, // the point is initially skipped
+                delay(ctx) {
+                    if (ctx.type !== 'data' || ctx.xStarted) {
+                        return 0;
+                    }
+                    ctx.xStarted = true;
+                    return ctx.index * delayBetweenPoints;
+                }
+            }
+        };
+
+        let myChart = new Chart(ctx, {
             type: 'line',
             data: dataChart,
             options: {
-                //animation,
                 responsive: true,
                 interaction: {
                     intersect: false
@@ -74,8 +93,6 @@ getCovid((err, data) => {
                 }
             }
         });
-
-
 
     }
 });
