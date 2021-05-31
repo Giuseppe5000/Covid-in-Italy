@@ -49,7 +49,7 @@ getCovid((err, data) => {
                 label: 'Andamento del virus',
                 data: dataCovid,
                 fill: false,
-                borderColor: 'rgb(75, 192, 192)',
+                borderColor: 'rgb(37, 80, 196)',
                 tension: 0.1
             }]
         };
