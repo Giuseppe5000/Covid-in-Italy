@@ -5,7 +5,7 @@ const totaleCasi = document.getElementById('totale-casi');
 const date = document.getElementById('date');
 
 let d = new Date();
-date.innerText = `${d.getDate()} / ${d.getMonth() + 1}  / ${d.getFullYear()}`
+date.innerHTML = `<strong>${d.getDate()} / ${d.getMonth() + 1}  / ${d.getFullYear()}</strong>`
 
 const getCovid = (callback) => {
     const request = new XMLHttpRequest();
@@ -31,11 +31,11 @@ getCovid((err, data) => {
         const dataCovid = [];
         const dataCovidDay = [];
 
-        todayDeath.innerText = `Morti : ${data['data']['today']['deaths']}`;
-        casi.innerText = `Casi confermati : ${data['data']['today']['confirmed']}`;
+        todayDeath.innerHTML = `<strong>Morti : ${data['data']['today']['deaths']}</strong>`;
+        casi.innerHTML = `<strong>Casi confermati : ${data['data']['today']['confirmed']}</strong>`;
 
-        totaleDeath.innerText = `Morti totali : ${data['data']['latest_data']['deaths']}`
-        totaleCasi.innerText = `Casi totali : ${data['data']['latest_data']['confirmed']}`
+        totaleDeath.innerHTML = `<strong>Morti totali : ${data['data']['latest_data']['deaths']}</strong>`
+        totaleCasi.innerHTML = `<strong>Casi totali : ${data['data']['latest_data']['confirmed']}</strong>`
 
         data['data']['timeline'].forEach(element => {
             dataCovid.push(element.new_confirmed);
@@ -48,7 +48,7 @@ getCovid((err, data) => {
         const dataChart = {
             labels: dataCovidDay,
             datasets: [{
-                label: 'Andamento del virus',
+                label: 'Casi del giorno',
                 data: dataCovid,
                 fill: false,
                 borderColor: 'rgb(37, 80, 196)',
@@ -79,6 +79,7 @@ getCovid((err, data) => {
             type: 'line',
             data: dataChart,
             options: {
+                animation: animation,
                 responsive: true,
                 interaction: {
                     intersect: false

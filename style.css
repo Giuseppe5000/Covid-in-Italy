@@ -6,7 +6,7 @@ body {
 }
 
 .header {
-    background-color: rgb(37, 80, 196);
+    background-image: linear-gradient(to right, turquoise, rgb(37, 80, 196), turquoise);
     display: flex;
     justify-content: center;
     margin: 1% 15% 0% 15%;
